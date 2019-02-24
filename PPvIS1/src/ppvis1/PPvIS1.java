@@ -13,8 +13,9 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-
+import javafx.geometry.Orientation;
 /**
  *
  * @author eugeni
@@ -42,14 +43,24 @@ public class PPvIS1 extends Application {
             
         });
         
+       
+      
+        
+        Label lbl = new Label();
+        TextField textField = new TextField();
+        textField.setPrefColumnCount(11);
+        Button btn = new Button("Click");
+        btn.setOnAction(event -> lbl.setText("Input: " + textField.getText()));
+       // FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10, textField, btn, lbl);
+        //Scene scene = new Scene(root, 250, 200);
+          
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10);
-        root.getChildren().addAll(aBtn, bBtn, cBtn, selectBtn, selectedLB1);
+        root.getChildren().addAll(aBtn, bBtn, cBtn, selectBtn, selectedLB1,btn,lbl,textField);
         
         Scene scene = new Scene(root, 250, 200);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Buttons");
         primaryStage.show();   
-      
     }  
        
 
