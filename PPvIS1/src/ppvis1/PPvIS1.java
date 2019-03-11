@@ -29,12 +29,32 @@ public class PPvIS1 extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Expection {
+        
+        ComboBox combobox = new ComboBox();
+        TextField textCombobox = new TextField();
+        Button btncombo = new Button("Button1");
+        btncombo.setOnAction(event -> {
+                {
+                    if (combobox.getItems().add(textCombobox.getText()));
+                    else { Alert error = new Alert(AlertType.ERROR);
+        error.setHeaderText("error");
+        error.showAndWait();}
+                }
+            });
+       // {
+        //    combobox.getItems().add(textCombobox.getText());
+      //  }); 
+        
         Label selectedLB1 = new Label();
         TextField textR = new TextField();
         Button selectBtn = new Button("select");
+        ToggleGroup group = new ToggleGroup();
         RadioButton aBtn = new RadioButton("111");
+        aBtn.setToggleGroup(group);
         RadioButton bBtn = new RadioButton("222");
+        bBtn.setToggleGroup(group);
         RadioButton cBtn = new RadioButton("333");
+        cBtn.setToggleGroup(group);
         selectBtn.setOnAction(event -> {
             if (textR.getText().equals("111")) aBtn.setSelected(true);
             else {
@@ -42,17 +62,13 @@ public class PPvIS1 extends Application {
                 else
                 {
                     if (textR.getText().equals("333")) cBtn.setSelected(true);
-                    else { Alert errorAlert = new Alert(AlertType.ERROR);
-        errorAlert.setHeaderText("error");
-        errorAlert.setContentText("not valid");
-        errorAlert.showAndWait();}
+                    else { Alert error = new Alert(AlertType.ERROR);
+        error.setHeaderText("error");
+        error.showAndWait();}
                 }
             }
         });
-        ToggleGroup group = new ToggleGroup();
-        aBtn.setToggleGroup(group);
-        bBtn.setToggleGroup(group);
-        cBtn.setToggleGroup(group);
+       
 
         Label t2 = new Label();
         TextField text2 = new TextField();
@@ -60,21 +76,21 @@ public class PPvIS1 extends Application {
         Button btn2 = new Button("Button1");
         Button btn21 = new Button("Button2");
         btn2.setOnAction(event -> btn21.setText( text2.getText()));
-        btn21.setOnAction(event -> btn2.setText( btn21.getText()));
-        
-        ComboBox combobox = new ComboBox();
-        TextField textCombobox = new TextField();
-        Button btncombo = new Button("Button1");
-        btncombo.setOnAction(event -> 
+         btn21.setOnAction(event -> 
         {
-            combobox.getItems().add(textCombobox.getText());
+            String stop = btn2.getText();
+            btn2.setText(btn21.getText());
+            btn21.setText(stop);
         });
+        
+       
        
         TextField text4 = new TextField();
         Button checkbutton = new Button("Button");
+
         CheckBox checkbox1 = new CheckBox("1");
         CheckBox checkbox2 = new CheckBox("2");
-        CheckBox checkbox3 = new CheckBox("3");
+        CheckBox checkbox3 = new CheckBox("3"); 
         checkbutton.setOnAction(event -> 
         {
             if (text4.getText().equals("1")) checkbox1.setSelected(true);
@@ -83,14 +99,14 @@ public class PPvIS1 extends Application {
                 else
                 {
                    if (text4.getText().equals("3")) checkbox3.setSelected(true);
-                   else { Alert errorAlert = new Alert(AlertType.ERROR);
-        errorAlert.setHeaderText("error");
-        errorAlert.setContentText("not valid");
-        errorAlert.showAndWait();
+                   else { Alert error = new Alert(AlertType.ERROR);
+        error.setHeaderText("error");
+        error.showAndWait();
                    }
                 }
             }
         });
+       
         
         TextField text5 = new TextField();
         Button tbutton1 = new Button("Add in 1 column");
