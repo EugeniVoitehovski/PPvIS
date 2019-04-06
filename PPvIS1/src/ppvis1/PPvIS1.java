@@ -5,6 +5,7 @@
  */
 package ppvis1;
 
+import java.util.Random;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class PPvIS1 extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Expection {
+    public void start(Stage primaryStage) throws Exception {
 
         ComboBox combobox = new ComboBox();
         TextField textCombobox = new TextField();
@@ -122,38 +123,106 @@ public class PPvIS1 extends Application {
         table.setItems(list);
         table.getColumns().addAll(fColumn, sColumn);
 
-        Button tbutton1 = new Button("Button1");
-        tbutton1.setOnAction(e -> {
+        Button tbutton1 = new Button("Add in table");
+        tbutton1.setOnAction(event -> {
             ObservableList<Task5> objectList = table.getItems();
-            objectList.add(new Task5(texttable.getText(), ""));
+            objectList.add(new Task5(texttable.getText()));
             table.setItems(objectList);
         });
 
-        Button tbutton2 = new Button("Button2");
-        tbutton2.setOnAction(e -> {
+        Button tbutton2 = new Button("switch to 1 column");
+        tbutton2.setOnAction(event -> {
             int rowIndex = table.getSelectionModel().getFocusedIndex();
-            String buff = table.getItems().get(rowIndex).getStr1();
-            table.getItems().remove(rowIndex);
-            table.getItems().add(rowIndex, new Task5("", buff));
+            if (rowIndex > -1) {
+                table.getItems().get(rowIndex).left();
+                table.refresh();
+            }
         });
 
-        Button tbutton3 = new Button("Button3");
-        tbutton3.setOnAction(e -> {
+        Button tbutton3 = new Button("switch to 2 column");
+        tbutton3.setOnAction(event -> {
             int rowIndex = table.getSelectionModel().getFocusedIndex();
-            String buff = table.getItems().get(rowIndex).getStr2();
-            table.getItems().remove(rowIndex);
-            table.getItems().add(rowIndex, new Task5(buff, ""));
+            if (rowIndex > -1) {
+                table.getItems().get(rowIndex).right();
+                table.refresh();
+            }
+        });
+
+        Button but1 = new Button("generate numbers");
+        Button but2 = new Button("start selection");
+        Button but3 = new Button("stop selection");
+        TextField textdop = new TextField();
+        VBox vb = new VBox();
+        but1.setOnAction(event -> {
+            vb.getChildren().clear();
+             Random a = new Random();
+            int res = (a.nextInt(10 - 1)) + 1;
+            textdop.setText(Integer.toString(res));
+             
+            //final CheckBoxItem[] items = new CheckBoxItem[res];
+            //CheckBox checkboxdop[] = new CheckBox[Integer.parseInt(textdop.getText())];
+            int n = Integer.parseInt(textdop.getText());
+            CheckBox checkboxdop[] = new CheckBox[n];
+            for (int i = 0; i < n; i++) {
+                checkboxdop[i] = new CheckBox();
+                vb.getChildren().add(checkboxdop[i]);
+            }
         });
 
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10);
         root.getChildren().addAll(combobox, textCombobox, btncombo, text2, btn2,
                 btn21, textR, selectBtn, aBtn, bBtn, cBtn, checkbox1, checkbox2,
                 checkbox3, text4, checkbutton, table, texttable, tbutton1,
-                tbutton2, tbutton3);
+                tbutton3, tbutton2, but1, but2, but3, textdop,vb);
+
         Scene scene = new Scene(root, 1000, 1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("LAB1");
         primaryStage.show();
+    }
+
+    public class Task5 {
+
+        private String str1;
+        private String str2;
+        private String val;
+
+        public Task5(String s1) {
+            str1 = s1;
+            str2 = "";
+            val = s1;
+        }
+
+        public String getStr1() {
+            return str1;
+        }
+
+        public String getStr2() {
+            return str2;
+        }
+
+        public String getValue() {
+            return this.val;
+        }
+
+        public void setStr1(String str1) {
+            this.str1 = str1;
+        }
+
+        public void setStr2(String str2) {
+            this.str2 = str2;
+        }
+
+        public void left() {
+            this.str1 = val;
+            this.str2 = "";
+        }
+
+        public void right() {
+            this.str2 = val;
+            this.str1 = "";
+        }
+
     }
 
     /**
