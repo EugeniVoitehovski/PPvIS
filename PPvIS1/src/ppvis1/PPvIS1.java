@@ -5,7 +5,10 @@
  */
 package ppvis1;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +33,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author eugeni
  */
 public class PPvIS1 extends Application {
+
+    //AtomicBoolean
+    public static volatile boolean work = true;
+    public static CheckBox[] c = {};
+    public static boolean process = true;
+    public static int start = 0;
+    public static int end = c.length;
+    Thread myThread = createThread();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -152,33 +163,55 @@ public class PPvIS1 extends Application {
         Button but2 = new Button("start selection");
         Button but3 = new Button("stop selection");
         TextField textdop = new TextField();
+
         VBox vb = new VBox();
+        List<CheckBox> checkboxdop = new ArrayList<>();
         but1.setOnAction(event -> {
             vb.getChildren().clear();
-             Random a = new Random();
-            int res = (a.nextInt(10 - 1)) + 1;
-            textdop.setText(Integer.toString(res));
-             
-            //final CheckBoxItem[] items = new CheckBoxItem[res];
-            //CheckBox checkboxdop[] = new CheckBox[Integer.parseInt(textdop.getText())];
-            int n = Integer.parseInt(textdop.getText());
-            CheckBox checkboxdop[] = new CheckBox[n];
-            for (int i = 0; i < n; i++) {
-                checkboxdop[i] = new CheckBox();
-                vb.getChildren().add(checkboxdop[i]);
+            checkboxdop.clear();
+            if (textdop.getText().isEmpty()
+                    || Integer.parseInt(textdop.getText()) == 0
+                    || Integer.parseInt(textdop.getText()) < 0) {
+                Alert error = new Alert(AlertType.ERROR);
+                error.setHeaderText("Text field are empty or you have input a 0 Or, maybe you have input a negative value.");
+                error.showAndWait();
+            } else {
+                c = new CheckBox[Integer.parseInt(textdop.getText())];
+                for (int i = 0; i < Integer.parseInt(textdop.getText()); i++) {
+                    c[i] = new CheckBox();
+                    end = c.length;
+                    vb.getChildren().add(c[i]);
+                }
+                start = 0;
             }
+        });
+        but2.setOnAction(event -> {
+            work = true;
+            if (c.length == 0) {
+                Alert error = new Alert(AlertType.ERROR);
+                error.setHeaderText("You did not generated a checkboxes.Please, input to text field number of checkbox and press 'generate numbers'.");
+                error.showAndWait();
+            } else {
+                myThread.setDaemon(true);
+                myThread.start();
+            }
+        });
+        but3.setOnAction(event -> {
+            work = false;
+            myThread.interrupt();
         });
 
         FlowPane root = new FlowPane(Orientation.VERTICAL, 10, 10);
         root.getChildren().addAll(combobox, textCombobox, btncombo, text2, btn2,
                 btn21, textR, selectBtn, aBtn, bBtn, cBtn, checkbox1, checkbox2,
                 checkbox3, text4, checkbutton, table, texttable, tbutton1,
-                tbutton3, tbutton2, but1, but2, but3, textdop,vb);
+                tbutton3, tbutton2, but1, but2, but3, textdop, vb);
 
         Scene scene = new Scene(root, 1000, 1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("LAB1");
         primaryStage.show();
+
     }
 
     public class Task5 {
@@ -223,6 +256,51 @@ public class PPvIS1 extends Application {
             this.str1 = "";
         }
 
+    }
+
+    public static Thread createThread() {
+        return new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+
+                while (work == true) {
+
+                    if (process == true) {
+                        if (c[start].isSelected()) {
+                            c[start].setSelected(false);
+                        } else {
+                            c[start].setSelected(true);
+                        }
+                        start++;
+                        process = false;
+                    } else {
+                        if (c[end - 1].isSelected() == true) {
+                            c[end - 1].setSelected(false);
+                        } else {
+                            c[end - 1].setSelected(true);
+                        }
+                        end--;
+                        process = true;
+                    }
+                    if (start == (c.length / 2) && end == ((c.length / 2))) {
+                        start = 0;
+                        end = c.length;
+                    }
+                    
+                    if (end - 1 == -1) {
+                        end = c.length;
+                    }
+                    if (start == c.length) {
+                        start = 0;
+                    }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PPvIS1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+        });
     }
 
     /**
