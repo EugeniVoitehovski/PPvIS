@@ -49,7 +49,9 @@ public class Interface extends Application {
         adrColumn.setMinWidth(200);
         TableView<Product> table = new TableView<>();
         table.setMaxWidth(1100);
-        table.setItems((ObservableList<Product>) info);
+        ObservableList<Product> list = getUserList();
+      table.setItems(list);
+        //table.setItems();
         table.getColumns().addAll(numberColumn, nameColumn, nameOfManufacturerColumn, numColumn, kolColumn, adrColumn);
         Pane pane = new Pane();
 
@@ -57,6 +59,11 @@ public class Interface extends Application {
         addbtn.setLayoutX(10);
         addbtn.setLayoutY(410);
         addbtn.setMinSize(100, 25);
+        
+        Button addInfoInTable = new Button("Добавить в таблицу");
+        addInfoInTable.setLayoutX(10);
+        addInfoInTable.setLayoutY(510);
+        addInfoInTable.setMinSize(100, 25);
 
         Button searchbtn = new Button("Поиск");
         searchbtn.setLayoutX(150);
@@ -80,10 +87,14 @@ public class Interface extends Application {
             delete();
         });
 
+        addInfoInTable.setOnAction(event -> {
+           
+        });
+        
         Label totalOfNotes = new Label("Количество записей:");
         totalOfNotes.setLayoutX(10);
         totalOfNotes.setLayoutY(460);
-        pane.getChildren().addAll(addbtn, searchbtn, deletebtn, totalOfNotes);
+        pane.getChildren().addAll(addbtn, searchbtn, deletebtn, totalOfNotes, addInfoInTable);
         root.getChildren().addAll(table, pane);
 
         Scene scene = new Scene(root, 1200, 1000);
@@ -236,12 +247,24 @@ public class Interface extends Application {
         deletedialog.show();
     }
     Group c = new Group();
-
+    
+     private ObservableList<Product> getUserList() {
+         
+         
+         
+      ObservableList<Product> list = FXCollections.observableArrayList();
+      return list;
+  }
+    
+    private void addInfo(TableView table, TableColumn numberColumn ) {
+      //  table.add();
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+        Controller contr = new Controller();
+       // launch(args); 
+        contr.read();
     }
-
 }

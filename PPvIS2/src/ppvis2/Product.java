@@ -1,6 +1,7 @@
 package ppvis2;
 
 import java.util.ArrayList;
+import javafx.scene.control.TableView;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,8 +14,8 @@ import java.util.ArrayList;
  */
 public class Product {
 
-     ArrayList <Product> info = new ArrayList<>();
-    
+    ArrayList<Product> info = new ArrayList<>();
+
     private int number;
     private String name;
     private String nameofmanufacturer;
@@ -22,22 +23,16 @@ public class Product {
     private int kol;
     private String adr;
 
-    public Product(int number, String name, String nameofmanufacturer, int num, int kol, String adr) {
-        this.number = number;
-        this.name = name;
-        this.nameofmanufacturer = nameofmanufacturer;
-        this.num = num;
-        this.kol = kol;
-        this.adr = adr;
-    }
-
    
+    public int getInfoSize() {
+        return info.size();
+    }
 
     public int getNumber() {
         return number;
     }
 
-    public void setNumber() {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -45,7 +40,7 @@ public class Product {
         return name;
     }
 
-    public void setName() {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -53,7 +48,7 @@ public class Product {
         return nameofmanufacturer;
     }
 
-    public void setNameOfManufacturer() {
+    public void setNameOfManufacturer(String nameofmanufacturer) {
         this.nameofmanufacturer = nameofmanufacturer;
     }
 
@@ -61,7 +56,7 @@ public class Product {
         return num;
     }
 
-    public void setNum() {
+    public void setNum(int num) {
         this.num = num;
     }
 
@@ -69,7 +64,7 @@ public class Product {
         return kol;
     }
 
-    public void setKol() {
+    public void setKol(int kol) {
         this.kol = kol;
     }
 
@@ -77,11 +72,20 @@ public class Product {
         return adr;
     }
 
-    public void setAdr() {
+    public void setAdr(String adr) {
         this.adr = adr;
     }
 
-    public ArrayList <Product> getItems() {
+    public void clearProduct() {
+        number = 0;
+        name = "";
+        nameofmanufacturer = "";
+        num = 0;
+        kol = 0;
+        adr = "";
+    }
+
+    public ArrayList<Product> getItems() {
         return info;
     }
 
@@ -89,7 +93,18 @@ public class Product {
         info.add(writes);
     }
 
-    public void deleteWrites(Product writes){
-        info.remove(writes);
+    public void showElement(Product currentElement, int index) {
+        System.out.println("Number["+index+"]: " + currentElement.getNumber());
+        System.out.println("Name["+index+"]:" + currentElement.getName());
+        System.out.println("NameOfManufacturer["+index+"]:" + currentElement.getNameOfManufacturer());
+        System.out.println("Num["+index+"]:" + currentElement.getNum());
+        System.out.println("Kol["+index+"]:" + currentElement.getKol());
+        System.out.println("Adress["+index+"]:" + currentElement.getAdr());
     }
+
+    public void showMas() {
+ for (int index=0; index<info.size(); index++)
+     showElement(info.get(index), index);
+    }
+
 }

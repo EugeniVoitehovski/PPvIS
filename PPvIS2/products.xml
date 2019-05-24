@@ -4,9 +4,12 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
+
+
 <products>
     <product>
-        <number>1</number>
+<number>1</number>
         <name>klaviatura</name>             
         <nameofmanufacturer>logitech</nameofmanufacturer>
         <unpofmanufacturer>12345</unpofmanufacturer>  
@@ -19,19 +22,19 @@ and open the template in the editor.
         </adressofstock>
     </product>
     <product>
-        <number>2</number>
+<number>2</number>
         <name>monitor</name> 
         <nameofmanufacturers>dell</nameofmanufacturers>
         <unpofmanufacturer>54321</unpofmanufacturer>
         <quantityinstock>30</quantityinstock>
-        <adressofstock>
+         <adressofstock>
             <city>Minsk</city>
             <street>Sadovaya</street>
             <house>3</house>
             <flat>12</flat>
         </adressofstock>
     </product> 
-    <product>
+<product>
         <number>3</number>
         <name>mouse</name> 
         <nameofmanufacturers>razer</nameofmanufacturers>
@@ -69,7 +72,7 @@ and open the template in the editor.
             <house>19</house>
             <flat>163</flat>
         </adressofstock>
-    </product>       
+    </product>          
 </products>
    
 
